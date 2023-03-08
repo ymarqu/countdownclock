@@ -1,0 +1,146 @@
+:root{
+    --clr-primary-1: #8FD3D8;
+    --ff-primary:'Open Sans', sans-serif;
+    --ff-seconday:'Open Sans', sans-serif;
+}
+
+/* GENEARL STYLES */
+body{
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: var(--clr-primary-1);
+    font-family: var(--ff-seconday);
+}
+
+h1, h2{
+    font-family: 'Pacifico', cursive;
+}
+main{
+    /* position: fixed; */
+    border-radius: 50px ;
+    background-color: aliceblue;
+    max-width: 500px;
+    width: 500px;
+    min-width: 90vw;
+    margin: auto auto;
+    display: flex;
+    height: 50vh;
+    top: 25vh;
+    transform: translateY(25vh);
+    border-radius: 30px;
+}
+.image-container{
+    width: 50%;
+    background-position-y: center;
+}
+img{
+ height: 100%;
+width: 100%;
+
+
+}
+input{
+    height: 4rem;
+    width: 20rem;
+    border-radius: 20px;
+    border: solid 2px #8FD3D8;
+    padding: 0 15px;
+    font-size: 1.2rem;
+}
+button{
+    display: block;
+    margin-top: 20px;
+    height: 4rem;
+    width: 15rem;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    border: 3px solid salmon;
+    background-color: salmon;
+    cursor: pointer;
+    position: fixed;
+
+}
+
+
+/* MODAL STYLES */
+
+.modal-overlay{
+    position:fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 123, 156, 0.5);
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+.modal-container{
+    background-color: #ffff;
+    height: 50vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+}
+.error{
+    color: red;
+}
+.hide{
+    visibility: hidden;
+    z-index: -10;
+}
+
+/* COUNTDOWN TIMER STYLES */
+.countdown-container{
+    box-sizing: border-box;
+    padding: 50px;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    background-color: blanchedalmond;
+    justify-items: center;
+    flex-direction: column;
+}
+.timer-container{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-container{
+    font-size: 1.5rem;
+    padding: 0 50px;
+    margin-bottom: 0;
+}
+.desc{
+    padding: 0 50px;
+}
+.block{
+    background-color: pink;
+    width: 120px;
+    text-align: center;
+}
+.data{
+    font-size: 3rem;
+    margin: 0;
+}
+
+@media screen and (max-width: 1500px){
+    .image-container{
+        visibility: hidden;
+        width: 0;
+    }
+    .countdown-container{
+        width: 100%;
+        border-radius: 30px;
+    }
+    .timer-container{
+        margin: 0;
+    }
+}
