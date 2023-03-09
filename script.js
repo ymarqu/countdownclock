@@ -1,3 +1,5 @@
+
+//Date functions
 const dates = () => {
     let _todaysDate = new Date();
 
@@ -5,11 +7,8 @@ const dates = () => {
         return _todaysDate;
     }
     const ConvertToDate = (day) => {
-        console.log(day)
-        let dateFormat = new Date(day);
-        console.log(dateFormat);
-
-                return dateFormat;
+        let dateFormat = new Date(`${day}T00:00`);
+        return dateFormat;
     }
 
     return {
@@ -19,57 +18,39 @@ const dates = () => {
 
 
 }
+
+//Timer functions
+//Purpose: Handles the timer aspect
 const Timer = () => {
 
-    calculateTimeLeft = (days, year, hours, seconds) => {
-        let day = new Date();
+      let date = dates();
+      calculateTimeLeft = (bd) => {
+      let dayConversion = 1000 * 3600 * 24;
+      let hourConversion = 1000 * 3600;
+      let currentDay = new Date().getTime(); // Todays dates and current time
+      let endDay = date.ConvertToDate(bd); // countDown deadline with 12 am as end time
+      let timeLeft = endDay - currentDay;
+      let days = Math.floor( timeLeft / dayConversion);
+      let remainderHours = timeLeft % dayConversion;
+      let hours = Math.floor((remainderHours) / (hourConversion));
+      let remainderMinutes = timeLeft % hourConversion;
+      let minutes = Math.floor(remainderMinutes / (1000 * 60))
+      let remainderSeconds = timeLeft % (1000 * 60);
+      let seconds = Math.floor(remainderSeconds / 1000);
 
-        let todayDay = day.getDate();
-        let todayMins = day.getMinutes();
-        let todayHour = day.getHours();
-        let todaySeconds = day.getSeconds();
-
-        let daysLeft = days - todayDay;
-        let hoursLeft = 22 - todayHour;
-        if(hoursLeft < 10){
-            hoursLeft = "0" +  hoursLeft.toString();
-        }
-        let minutesLeft = 59 - todayMins;
-        if(minutesLeft < 10){
-            minutesLeft = "0" + minutesLeft.toString();
-        }
-        let secondsLeft = 60 - todaySeconds;
-        if(secondsLeft < 10){
-            secondsLeft = "0" + secondsLeft.toString();
-        }
-        if(secondsLeft === 60){
-            secondsLeft = "00";
-        }
+      minutes = minutes < 10 ? '0' + minutes.toString() : minutes;
+      seconds = seconds < 10 ? '0' + seconds.toString() : seconds;
 
         return{
-          daysLeft,
-          hoursLeft,
-          minutesLeft,
-          secondsLeft
-        }
-
-    }
-    GetTimerStart = (birthdayDate) => {
-        let dayy = birthdayDate.getDate();
-        let minutes = birthdayDate.getMinutes();
-        birthdayDate.setHours(0, 0, 0,0)
-        let hours = birthdayDate.getHours();
-
-        let seconds = birthdayDate.getSeconds();
-
-        return {
-            dayy, minutes, hours, seconds
+            days,
+            hours,
+            minutes,
+            seconds
         }
 
     }
 
     return {
-        GetTimerStart,
         calculateTimeLeft
     }
 
@@ -77,39 +58,40 @@ const Timer = () => {
 
 
 
-
+//Screen controller module
+// Purpose: Handels the html and css rendered to the user
 const ScreenControl = (() => {
 
     let dateUtils = dates();
     let timer = Timer();
 
-    let getUserBirthday = () => {
+    const getUserBirthday = () => {
     const form = document.querySelector("form");
     form.addEventListener("submit", (e) => {
      e.preventDefault();
      let birthday = form.birthday.value
-     console.log(birthday);
      let birthdayDateFormat = dateUtils.ConvertToDate(birthday)
-     console.log(birthdayDateFormat)
-    if(dateUtils.getTodaysDate().getTime() > birthdayDateFormat.getTime())
-    {
+
+     let timeLeft = timer.calculateTimeLeft(birthday)
+     updateScreen(timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds)
+
+     //If time is after today's day error message is displayed. If input is valid timer starts
+     if(dateUtils.getTodaysDate().getTime() > birthdayDateFormat.getTime()){
         document.querySelector('.error').classList.remove("hide")
         form.reset();
-    }else{
-
-    let format = timer.GetTimerStart(birthdayDateFormat);
-    setInterval(()=> {
-       let timeLeft = timer.calculateTimeLeft(format.dayy, format.hours, format.minutes, format.seconds)
-       updateScreen(timeLeft.daysLeft, timeLeft.hoursLeft, timeLeft.minutesLeft, timeLeft.secondsLeft)
-    }, 1000)
-
-
-    document.querySelector('.modal-overlay').classList.add('hide');
-    document.querySelector('main').classList.remove('hide');
-    document.querySelector(".user-bday").innerHTML = birthdayDateFormat;
-}
+     }else{
+       setInterval(()=> {
+         timeLeft = timer.calculateTimeLeft( birthday)
+         updateScreen(timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds)
+         }, 1000);
+         //Modal styles
+         document.querySelector('.modal-overlay').classList.add('hide');
+         document.querySelector('main').classList.remove('hide');
+         document.querySelector(".user-bday").innerHTML = birthdayDateFormat.toDateString();
+        }
     });
-  }
+  };
+  //update timer on user display
   const updateScreen = (d,h, m,s) => {
 
     document.querySelector(".days-left").innerHTML = d;

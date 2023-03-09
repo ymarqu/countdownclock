@@ -1,5 +1,9 @@
 :root{
     --clr-primary-1: #8FD3D8;
+    --clr-secondary-2:rgba(255, 123, 156, 0.5);
+    --clr-third-3: #B1B2FF;
+    --clr-white-1: #ffff;
+    --clr-error: red;
     --ff-primary:'Open Sans', sans-serif;
     --ff-seconday:'Open Sans', sans-serif;
 }
@@ -16,19 +20,21 @@ body{
 
 h1, h2{
     font-family: 'Pacifico', cursive;
+    color: var(--clr-secondary-2);
 }
 main{
     /* position: fixed; */
     border-radius: 50px ;
-    background-color: aliceblue;
-    max-width: 500px;
-    width: 500px;
-    min-width: 90vw;
+    background-color: var(--clr-white-1);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 100%;
+    max-width: 1600px;
     margin: auto auto;
     display: flex;
     height: 50vh;
     top: 25vh;
     transform: translateY(25vh);
+    border-collapse: separate;
     border-radius: 30px;
 }
 .image-container{
@@ -37,7 +43,8 @@ main{
 }
 img{
  height: 100%;
-width: 100%;
+ width: 100%;
+ border-radius: inherit ;
 
 
 }
@@ -45,42 +52,31 @@ input{
     height: 4rem;
     width: 20rem;
     border-radius: 20px;
-    border: solid 2px #8FD3D8;
+    border: solid 2px var(--clr-primary-1);
     padding: 0 15px;
     font-size: 1.2rem;
 }
-button{
-    display: block;
-    margin-top: 20px;
-    height: 4rem;
-    width: 15rem;
-    border-radius: 20px;
-    font-size: 1.2rem;
-    font-family: inherit;
-    border: 3px solid salmon;
-    background-color: salmon;
-    cursor: pointer;
-    position: fixed;
 
-}
 
 
 /* MODAL STYLES */
 
 .modal-overlay{
+    background-color: var(--clr-secondary-2);
     position:fixed;
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(255, 123, 156, 0.5);
     display: grid;
     align-items: center;
     justify-items: center;
 }
 .modal-container{
-    background-color: #ffff;
+    text-align: center;
+    background-color: var(--clr-white-1);
     height: 50vh;
+    /* width: 100%; */
     width: 50vw;
     display: flex;
     flex-direction: column;
@@ -88,14 +84,41 @@ button{
     align-items: center;
     border-radius: 30px;
 }
+.modal-title{
+    font-size: 4rem;
+    margin-bottom: 0;
+    color: var(--clr-primary-1)
+}
+.message{
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
 .error{
-    color: red;
+    color: var(--clr-error);
 }
 .hide{
     visibility: hidden;
     z-index: -10;
 }
-
+button{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    margin-top: 20px;
+    height: 4rem;
+    width: 15rem;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    border: none;
+    background-color: var(--clr-secondary-2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+button:hover{
+    background-color: #FF8E9E;
+}
 /* COUNTDOWN TIMER STYLES */
 .countdown-container{
     box-sizing: border-box;
@@ -103,7 +126,6 @@ button{
     height: 100%;
     text-align: center;
     display: flex;
-    background-color: blanchedalmond;
     justify-items: center;
     flex-direction: column;
 }
@@ -122,9 +144,12 @@ button{
     padding: 0 50px;
 }
 .block{
-    background-color: pink;
+    background-color: var(--clr-secondary-2);
     width: 120px;
     text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    background-color: var(--clr-secondary-2);
 }
 .data{
     font-size: 3rem;
@@ -136,11 +161,56 @@ button{
         visibility: hidden;
         width: 0;
     }
+    main, .modal-container{
+        width: 85vw;
+    }
     .countdown-container{
         width: 100%;
         border-radius: 30px;
     }
     .timer-container{
-        margin: 0;
+        margin-top: 5rem;
+    }
+
+}
+@media screen and (max-width: 749px){
+    h1{
+        font-size: 2rem;
+    }
+    main{
+        height: 70%;
+    }
+    .countdown-container{
+        padding: 0;
+        height: 70%;
+    }
+    .text-container{
+        padding: 0;
+    }
+    .text-container p{
+        font-size: 1rem;
+    }
+    .block{
+        width: 70px
+    }
+    .block p{
+        font-size: 0.8rem;
+        padding-top: 10px;
+    }
+    .modal-title{
+        font-size: 2rem;
+    }
+    input{
+        width: 90%;
+        height: 2rem;
+    }
+    .message{
+        font-size: 0.8rem;
+    }
+    button{
+        height: 2rem;
+    }
+    .modal-container{
+        height: 70%;
     }
 }
